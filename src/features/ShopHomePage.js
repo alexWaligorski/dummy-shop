@@ -3,10 +3,16 @@ import { useGetCategoriesQuery, useGetProductsQuery } from "./api/apiSlice";
 import { Link } from "react-router-dom";
 
 export default function ShopHomePage() {
-  const { data: categories } = useGetCategoriesQuery();
-  const { data: products } = useGetProductsQuery();
+  const { data: categories, isLoading: isLoadingCategories } =
+    useGetCategoriesQuery();
+  const { data: products, isLoading: isLoadingProducts } =
+    useGetProductsQuery();
+
+  if (isLoadingCategories || isLoadingProducts) {
+    return <h2>Is Loading...</h2>;
+  }
   return (
-    <div>
+    <>
       <h1>DUMMY SHOP</h1>
       {categories && (
         <>
@@ -20,7 +26,7 @@ export default function ShopHomePage() {
       )}
       {products && (
         <>
-          <h2>Product Categories</h2>
+          <h2>Products</h2>
           <ul>
             {products.products.map((products) => (
               <li key={products.id}>
@@ -30,6 +36,6 @@ export default function ShopHomePage() {
           </ul>
         </>
       )}
-    </div>
+    </>
   );
 }

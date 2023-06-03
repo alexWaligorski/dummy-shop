@@ -6,12 +6,12 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({
     getProducts: builder.query({ query: () => "/products?limit=10" }),
     getCategories: builder.query({ query: () => "/products/categories" }),
-    getSingleProduct: builder.query({ query: (id) => `products/${id}` }),
+    getProduct: builder.query({ query: (id) => `products/${id}` }),
   }),
 });
 
 export const {
   useGetProductsQuery,
   useGetCategoriesQuery,
-  useGetSingleProductQuery,
+  useGetProductQuery,
 } = apiSlice;

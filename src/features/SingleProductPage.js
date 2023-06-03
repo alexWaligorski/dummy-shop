@@ -1,10 +1,10 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useGetSingleProductQuery } from "./api/apiSlice";
+import { useGetProductQuery } from "./api/apiSlice";
 
 export default function SingleProductPage() {
   const { productId } = useParams();
-  const { data: product, isSuccess } = useGetSingleProductQuery(productId);
+  const { data: product, isSuccess } = useGetProductQuery(productId);
 
   if (isSuccess) {
     console.log(product);
