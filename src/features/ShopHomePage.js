@@ -22,7 +22,9 @@ export default function ShopHomePage() {
           <h2>Product Categories</h2>
           <ul>
             {categories.map((category) => (
-              <li key={category}>{category}</li>
+              <li key={category}>
+                <Link to={`/products/category/${category}`}>{category}</Link>
+              </li>
             ))}
           </ul>
         </>
