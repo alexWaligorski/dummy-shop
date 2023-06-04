@@ -4,10 +4,10 @@ import { useGetProductQuery } from "./api/apiSlice";
 
 export default function SingleProductPage() {
   const { productId } = useParams();
-  const { data: product, isSuccess } = useGetProductQuery(productId);
+  const { data: product, isLoading } = useGetProductQuery(productId);
 
-  if (isSuccess) {
-    console.log(product);
+  if (isLoading) {
+    return <h1>Is Loading...</h1>;
   }
 
   return product && <h1>{product.title}</h1>;
