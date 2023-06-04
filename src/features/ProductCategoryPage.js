@@ -11,12 +11,15 @@ export default function ProductCategoryPage() {
   }
 
   return (
-    products && (
-      <ul>
-        {products.products.map((product) => (
-          <li key={product.id}>{product.title}</li>
-        ))}
-      </ul>
-    )
+    <>
+      <h1>{category}</h1>
+      {products && (
+        <ul>
+          {products.products.map((product) => (
+            <li key={product.id}>{product.title}</li>
+          ))}
+        </ul>
+      )}
+    </>
   );
 }

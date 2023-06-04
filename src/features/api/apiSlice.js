@@ -5,12 +5,13 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "https://dummyjson.com" }),
   endpoints: (builder) => ({
     getProducts: builder.query({
-      query: (productsToSkip) => `/products?limit=10&skip=${productsToSkip}`,
+      query: (productsToSkip = 0) =>
+        `/products?limit=10&skip=${productsToSkip}`,
     }),
     getCategories: builder.query({ query: () => "/products/categories" }),
-    getProduct: builder.query({ query: (id) => `products/${id}` }),
+    getProduct: builder.query({ query: (id) => `/products/${id}` }),
     getProductsByCategory: builder.query({
-      query: (category) => `products/category/${category}`,
+      query: (category) => `/products/category/${category}`,
     }),
   }),
 });
