@@ -7,11 +7,13 @@ export const apiSlice = createApi({
     getProducts: builder.query({
       query: (productsToSkip = 0) =>
         `/products?limit=10&skip=${productsToSkip}`,
+      transformResponse: (response) => response.products,
     }),
     getCategories: builder.query({ query: () => "/products/categories" }),
     getProduct: builder.query({ query: (id) => `/products/${id}` }),
     getProductsByCategory: builder.query({
       query: (category) => `/products/category/${category}`,
+      transformResponse: (response) => response.products,
     }),
   }),
 });

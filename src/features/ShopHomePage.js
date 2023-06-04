@@ -2,6 +2,7 @@ import React from "react";
 import { useGetCategoriesQuery, useGetProductsQuery } from "./api/apiSlice";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import ProductsList from "../components/ProductsList";
 
 export default function ShopHomePage() {
   const [productBatch, setProductBatch] = useState(0);
@@ -31,14 +32,7 @@ export default function ShopHomePage() {
       )}
       {products && (
         <>
-          <h2>Products</h2>
-          <ul>
-            {products.products.map((products) => (
-              <li key={products.id}>
-                <Link to={`/products/${products.id}`}>{products.title}</Link>
-              </li>
-            ))}
-          </ul>
+          <ProductsList products={products} />
           <button
             type="button"
             disabled={productBatch <= 0}

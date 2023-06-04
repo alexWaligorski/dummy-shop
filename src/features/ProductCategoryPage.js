@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useGetProductsByCategoryQuery } from "./api/apiSlice";
+import ProductsList from "../components/ProductsList";
 
 export default function ProductCategoryPage() {
   const { category } = useParams();
@@ -13,13 +14,7 @@ export default function ProductCategoryPage() {
   return (
     <>
       <h1>{category}</h1>
-      {products && (
-        <ul>
-          {products.products.map((product) => (
-            <li key={product.id}>{product.title}</li>
-          ))}
-        </ul>
-      )}
+      {products && <ProductsList products={products} />}
     </>
   );
 }
