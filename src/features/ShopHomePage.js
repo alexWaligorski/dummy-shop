@@ -1,5 +1,9 @@
 import React from "react";
-import { useGetCategoriesQuery, useGetProductsQuery } from "./api/apiSlice";
+import {
+  useGetCategoriesQuery,
+  useGetProductsQuery,
+  useGetAllProductsQuery,
+} from "./api/apiSlice";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import ProductsList from "../components/ProductsList";
@@ -11,7 +15,36 @@ export default function ShopHomePage() {
   const { data: products, isLoading: isLoadingProducts } =
     useGetProductsQuery(productBatch);
 
-  if (isLoadingCategories || isLoadingProducts) {
+  const { data: bestRatedProducts, isLoading: isLoadingBestRated } =
+    useGetAllProductsQuery(undefined, {
+      selectFromResult: ({ data, isLoading, isUninitialized }) => {
+        const filteredData = (data ?? []).filter(
+          (product) => product.rating > 4.9
+        );
+        return {
+          data: filteredData,
+          isLoading: isUninitialized || isLoading,
+        };
+      },
+    });
+
+  console.log(bestRatedProducts);
+
+  /*   const { data: bestRatedProducts, isLoading: isLoadingBestRated } =
+    useGetAllProductsQuery(undefined, {
+      selectFromResult: (result) => {
+        const filteredData = (result.data ?? []).filter(
+          (product) => product.rating > 4.5
+        );
+        return {
+          ...result,
+          data: filteredData,
+          isLoading: result.isUninitialized || result.isLoading,
+        };
+      },
+    }); */
+
+  if (isLoadingCategories || isLoadingProducts || isLoadingBestRated) {
     return <h2>Is Loading...</h2>;
   }
 
@@ -30,9 +63,12 @@ export default function ShopHomePage() {
           </ul>
         </>
       )}
+      {bestRatedProducts && (
+        <ProductsList products={bestRatedProducts} listType="bestRated" />
+      )}
       {products && (
         <>
-          <ProductsList products={products} />
+          <ProductsList products={products} listType="regular" />
           <button
             type="button"
             disabled={productBatch <= 0}
@@ -43,6 +79,7 @@ export default function ShopHomePage() {
           <div>{productBatch / 10 + 1}</div>
           <button
             type="button"
+            disabled={productBatch === 90}
             onClick={() => setProductBatch((prevBatch) => prevBatch + 10)}
           >
             Next Products

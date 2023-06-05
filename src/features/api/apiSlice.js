@@ -9,6 +9,10 @@ export const apiSlice = createApi({
         `/products?limit=10&skip=${productsToSkip}`,
       transformResponse: (response) => response.products,
     }),
+    getAllProducts: builder.query({
+      query: () => "/products?limit=100",
+      transformResponse: (response) => response.products,
+    }),
     getCategories: builder.query({ query: () => "/products/categories" }),
     getProduct: builder.query({ query: (id) => `/products/${id}` }),
     getProductsByCategory: builder.query({
@@ -23,4 +27,5 @@ export const {
   useGetCategoriesQuery,
   useGetProductQuery,
   useGetProductsByCategoryQuery,
+  useGetAllProductsQuery,
 } = apiSlice;
