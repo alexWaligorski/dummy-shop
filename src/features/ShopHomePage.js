@@ -28,9 +28,12 @@ export default function ShopHomePage() {
       },
     });
 
-  console.log(bestRatedProducts);
-
-  /*   const { data: bestRatedProducts, isLoading: isLoadingBestRated } =
+  /*   
+  
+  Problem with isLoading when using selectfrom result:
+  https://github.com/reduxjs/redux-toolkit/issues/2827
+  
+  const { data: bestRatedProducts, isLoading: isLoadingBestRated } =
     useGetAllProductsQuery(undefined, {
       selectFromResult: (result) => {
         const filteredData = (result.data ?? []).filter(
@@ -51,9 +54,9 @@ export default function ShopHomePage() {
   return (
     <>
       <h1>DUMMY SHOP</h1>
+      <h2>Product Categories</h2>
       {categories && (
         <>
-          <h2>Product Categories</h2>
           <ul>
             {categories.map((category) => (
               <li key={category}>
@@ -63,12 +66,12 @@ export default function ShopHomePage() {
           </ul>
         </>
       )}
-      {bestRatedProducts && (
-        <ProductsList products={bestRatedProducts} listType="bestRated" />
-      )}
+      <h2>Best Rated Products</h2>
+      {bestRatedProducts && <ProductsList products={bestRatedProducts} />}
+      <h2>Products</h2>
       {products && (
         <>
-          <ProductsList products={products} listType="regular" />
+          <ProductsList products={products} />
           <button
             type="button"
             disabled={productBatch <= 0}
