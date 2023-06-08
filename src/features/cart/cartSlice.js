@@ -15,6 +15,13 @@ export const cartSlice = createSlice({
         alreadyAddedProduct.quantity = alreadyAddedProduct.quantity + 1;
       }
     },
+    productQuantityIncremented(state, action) {
+      const { id } = action.payload;
+      const alreadyAddedProduct = state.find((product) => product.id === id);
+      if (alreadyAddedProduct) {
+        alreadyAddedProduct.quantity = alreadyAddedProduct.quantity + 1;
+      }
+    },
     productQuantityDecremented(state, action) {
       const { id } = action.payload;
       const alreadyAddedProduct = state.find((product) => product.id === id);
@@ -37,6 +44,10 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { productAdded, productDeleted, productQuantityDecremented } =
-  cartSlice.actions;
+export const {
+  productAdded,
+  productDeleted,
+  productQuantityDecremented,
+  productQuantityIncremented,
+} = cartSlice.actions;
 export default cartSlice.reducer;

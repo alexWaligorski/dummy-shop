@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  productAdded,
+  productQuantityIncremented,
   productQuantityDecremented,
   productDeleted,
 } from "./cartSlice";
@@ -12,7 +12,7 @@ export default function CartItemControl({ quantity, productId }) {
   function onIncrementQuantity(event) {
     const clickedProductId = parseInt(event.target.value, 10);
 
-    dispatch(productAdded({ id: clickedProductId }));
+    dispatch(productQuantityIncremented({ id: clickedProductId }));
   }
 
   function onDecrementQuantity(event) {

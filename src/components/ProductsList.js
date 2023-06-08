@@ -12,7 +12,9 @@ export default function ProductsList({ products }) {
       (product) => product.id === clickedProductId
     );
 
-    dispatch(productAdded(clickedProduct));
+    if (clickedProduct) {
+      dispatch(productAdded(clickedProduct));
+    }
   }
 
   function onRemoveFromCart(event) {
