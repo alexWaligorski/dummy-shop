@@ -4,6 +4,7 @@ import { useGetProductQuery } from "./api/apiSlice";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { productQuantitySetTo } from "./cart/cartSlice";
+import { productFavored } from "./favoriteProducts/favoritePoductsSlice";
 
 export default function SingleProductPage() {
   const { productId } = useParams();
@@ -16,6 +17,8 @@ export default function SingleProductPage() {
         ?.quantity ?? 1
   );
 
+  const likedProducts = useSelector((state) => state.favoriteProducts);
+
   useEffect(() => {
     setAmountOfItems(productInCartQuantity);
   }, [product, productId, productInCartQuantity]);
@@ -26,6 +29,10 @@ export default function SingleProductPage() {
     dispatch(productQuantitySetTo(updatedProduct));
   }
 
+  function onLike(event) {
+    dispatch(productFavored({ id: parseInt(event.target.value) }));
+  }
+
   if (isLoading) {
     return <h1>Is Loading...</h1>;
   }
@@ -34,6 +41,18 @@ export default function SingleProductPage() {
     product && (
       <article>
         <h1>{product.title}</h1>
+        <button
+          type="button"
+          value={product.id}
+          onClick={onLike}
+          style={
+            likedProducts.find((likedProduct) => likedProduct.id === product.id)
+              ? { backgroundColor: "green" }
+              : null
+          }
+        >
+          Like!
+        </button>
         <img
           src={product.thumbnail}
           alt={product.title}
