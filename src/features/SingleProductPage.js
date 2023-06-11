@@ -10,24 +10,19 @@ export default function SingleProductPage() {
   const dispatch = useDispatch();
   const { data: product, isLoading } = useGetProductQuery(productId);
   const [amountOfItems, setAmountOfItems] = useState(1);
-  const cart = useSelector((state) => state.cart);
+  const productInCartQuantity = useSelector(
+    (state) =>
+      state.cart.find((cartItem) => cartItem.id === parseInt(productId))
+        ?.quantity ?? 1
+  );
 
   useEffect(() => {
-    if (product) {
-      const parsedProductId = parseInt(productId);
-      const productInCart = cart.find(
-        (cartItem) => cartItem.id === parsedProductId
-      );
-      if (productInCart) {
-        const productQuantity = productInCart.quantity;
-        setAmountOfItems(productQuantity);
-      }
-    }
-  }, [product, productId, cart]);
+    setAmountOfItems(productInCartQuantity);
+  }, [product, productId, productInCartQuantity]);
 
   function onAddItemsToCart(event) {
     event.preventDefault();
-    const updatedProduct = { ...product, quantity: amountOfItems };
+    const updatedProduct = { ...product, quantity: event.target.amount.value };
     dispatch(productQuantitySetTo(updatedProduct));
   }
 
@@ -48,7 +43,7 @@ export default function SingleProductPage() {
         <p>{product.price} €</p>
         <form onSubmit={onAddItemsToCart}>
           <button
-            disabled={amountOfItems === 0}
+            disabled={amountOfItems === 1}
             onClick={() =>
               setAmountOfItems((prevAmountOfItems) => prevAmountOfItems - 1)
             }
