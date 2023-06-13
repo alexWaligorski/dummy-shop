@@ -5,12 +5,13 @@ import SingleProductPage from "./features/SingleProductPage";
 import ProductCategoryPage from "./features/ProductCategoryPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import BestOfferPage from "./features/BestOfferPage";
 
 function App() {
   return (
     <>
-      <Navbar />
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route exact path="/" element={<WelcomePage />} />
           <Route exact path="/home" element={<ShopHomePage />} />
@@ -24,6 +25,7 @@ function App() {
             path="/products/:productId"
             element={<SingleProductPage />}
           />
+          <Route exact path="/offers" element={<BestOfferPage />} />
         </Routes>
       </BrowserRouter>
     </>

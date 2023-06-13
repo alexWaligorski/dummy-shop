@@ -32,11 +32,10 @@ export default function ProductsList({ products }) {
   return (
     <ul>
       {products.map((product) => (
-        <li key={product.id}>
-          <Link to={`/products/${product.id}`}>
-            {product.title}
-            {" // "} {product.rating}
-          </Link>
+        <li className="product-entry" key={product.id}>
+          <img src={product.thumbnail} alt={product.title} />
+          <Link to={`/products/${product.id}`}>{product.title}</Link>
+          <span>Rating: {product.rating}</span>
           <button type="button" onClick={onAddToCart} value={product.id}>
             {" "}
             Add to cart

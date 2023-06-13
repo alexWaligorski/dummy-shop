@@ -57,7 +57,7 @@ export default function ShopHomePage() {
       <h2>Product Categories</h2>
       {categories && (
         <>
-          <ul>
+          <ul className="category-list">
             {categories.map((category) => (
               <li key={category}>
                 <Link to={`/products/category/${category}`}>{category}</Link>
