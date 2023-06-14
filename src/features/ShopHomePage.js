@@ -10,6 +10,9 @@ import ProductsList from "../components/ProductsList";
 
 export default function ShopHomePage() {
   const [productBatch, setProductBatch] = useState(0);
+  const [isLaptopsInputChecked, setLaptopsInputChecked] = useState(false);
+  const [minRatingInput, setMinRatingInput] = useState(0);
+
   const { data: categories, isLoading: isLoadingCategories } =
     useGetCategoriesQuery();
   const { data: products, isLoading: isLoadingProducts } =
@@ -52,43 +55,80 @@ export default function ShopHomePage() {
   }
 
   return (
-    <>
-      <h1>DUMMY SHOP</h1>
-      <h2>Product Categories</h2>
-      {categories && (
-        <>
-          <ul className="category-list">
-            {categories.map((category) => (
-              <li key={category}>
-                <Link to={`/products/category/${category}`}>{category}</Link>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-      <h2>Best Rated Products</h2>
-      {bestRatedProducts && <ProductsList products={bestRatedProducts} />}
-      <h2>Products</h2>
-      {products && (
-        <>
-          <ProductsList products={products} />
-          <button
-            type="button"
-            disabled={productBatch <= 0}
-            onClick={() => setProductBatch((prevBatch) => prevBatch - 10)}
-          >
-            Previous Products
-          </button>
-          <div>{productBatch / 10 + 1}</div>
-          <button
-            type="button"
-            disabled={productBatch === 90}
-            onClick={() => setProductBatch((prevBatch) => prevBatch + 10)}
-          >
-            Next Products
-          </button>
-        </>
-      )}
-    </>
+    <div className="container">
+      <h1 className="header">DUMMY SHOP</h1>
+      <div className="categories">
+        <h2>Product Categories</h2>
+        {categories && (
+          <>
+            <ul className="category-list">
+              {categories.map((category) => (
+                <li key={category}>
+                  <Link to={`/products/category/${category}`}>{category}</Link>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
+      <div className="best-rated">
+        <h2>Best Rated Products</h2>
+        {bestRatedProducts && <ProductsList products={bestRatedProducts} />}
+      </div>
+      <div className="products">
+        <h2>Products</h2>
+        <label>
+          <input
+            type="checkbox"
+            checked={isLaptopsInputChecked}
+            onChange={() => setLaptopsInputChecked((prevState) => !prevState)}
+          />
+          only laptops
+        </label>
+        <input
+          type="number"
+          value={minRatingInput}
+          onChange={(e) => setMinRatingInput(e.target.value)}
+        />
+        {products && (
+          <>
+            <ProductsList
+              products={products.filter((product) => {
+                let laptopCondition = true;
+                if (isLaptopsInputChecked === false) {
+                  laptopCondition = true;
+                } else {
+                  laptopCondition = product.category === "laptops";
+                }
+
+                let ratingCondition = true;
+                if (minRatingInput <= 0) {
+                  ratingCondition = true;
+                } else {
+                  ratingCondition = product.rating > parseInt(minRatingInput);
+                }
+
+                return laptopCondition && ratingCondition;
+              })}
+            />
+            <button
+              type="button"
+              disabled={productBatch <= 0}
+              onClick={() => setProductBatch((prevBatch) => prevBatch - 10)}
+            >
+              Previous Products
+            </button>
+            <div>{productBatch / 10 + 1}</div>
+            <button
+              type="button"
+              disabled={productBatch === 90}
+              onClick={() => setProductBatch((prevBatch) => prevBatch + 10)}
+            >
+              Next Products
+            </button>
+          </>
+        )}
+      </div>
+    </div>
   );
 }
