@@ -33,7 +33,9 @@ export default function ProductsList({ products }) {
     <ul>
       {products.map((product) => (
         <li className="product-entry" key={product.id}>
-          <img src={product.thumbnail} alt={product.title} />
+          
+          <div className="product-img"><img src={product.thumbnail} alt={product.title} /></div>
+          <div className="product-info">
           <Link to={`/products/${product.id}`}>{product.title}</Link>
           <span>Rating: {product.rating}</span>
           <button type="button" onClick={onAddToCart} value={product.id}>
@@ -58,6 +60,7 @@ export default function ProductsList({ products }) {
           >
             Like!
           </button>
+          </div>
         </li>
       ))}
     </ul>

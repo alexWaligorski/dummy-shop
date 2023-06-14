@@ -26,18 +26,36 @@ li {
 
 .product-entry {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
+  justify-content: left;
+  align-items: stretch;
   border: 1px solid black;
   border-radius: 5px;
   margin-bottom: 1rem;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  padding: 0;
+  height: 8rem;
 }
 
-.product-entry img {
-  height: 3rem;
-  width: auto;
+
+.product-entry .product-img {
+  background-color: aqua;
+  flex: 33%;
+}
+
+.product-entry .product-img img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-entry .product-info {
+  background-color: bisque;
+  flex: 66%;
+}
+
+.product-entry .product-info * {
+  display: 
+  block;
 }
 
 .category-list {
